@@ -51,6 +51,7 @@ const otherString = new String('Hello other developer')
 
 
 // ------------------------------- charCodeAt() ----------------------
-console.log(str.charCodeAt(2), 'testttttttttttttttt')
+console.log(str.charCodeAt(2), 'testttttttttttttttt') 
+// new line from the git hub directory 
 
 
