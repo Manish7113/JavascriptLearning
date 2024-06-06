@@ -54,4 +54,6 @@ const otherString = new String('Hello other developer')
 console.log(str.charCodeAt(2), 'testttttttttttttttt') 
 // new line from the git hub directory 
 
+// kjhjkh
+
 
