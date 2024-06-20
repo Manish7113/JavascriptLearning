@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+   .container {
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    position: relative;
+    margin: auto;
+}
+
+.button {
+    background-color: cyan;
+    border-radius: 5px;
+    border: none;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-center {
+    z-index: 5; /* Highest z-index for the centered button */
+}
+
+.button-right-top {
+    top: 10px;
+    right: 10px;
+    z-index: 4;
+}
+
+.button-right-bottom {
+    bottom: 10px;
+    right: 10px;
+    z-index: 3;
+}
+
+.button-left-bottom {
+    bottom: 10px;
+    left: 10px;
+    z-index: 2;
+}
+
+.button-left-top {
+    top: 10px;
+    left: 10px;
+    z-index: 1; /* Lowest z-index for the top left button */
+}
+
+.button:hover {
+    z-index: 6; /* Ensure hovered button remains on top */
+}
+
+
+</style>
+
+<body>
+    <div class="container">
+        <button class="button button-center">
+            Git
+        </button>
+        <button class="button button-right-top">
+            Rit
+        </button>
+        <button class="button button-right-bottom">
+            Rib
+        </button>
+        <button class="button button-left-bottom">
+            Lib
+        </button>
+        <button class="button button-left-top">
+            Lit
+        </button>
+    </div>
+    
+
+</body>
+
+</html>
