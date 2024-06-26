@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGI Project</title>
+</head>
+<style>
+    body{
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    *{
+        box-sizing: border-box;
+        padding: 0px;
+        margin: 0px;
+    }
+    .container{
+        align-self: center;
+       margin-top: 10px;
+        width: 400px;
+        min-width: auto;
+        /* min-width: max-content; */
+        max-width: 500px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        /* align-items: start; */
+        border: 1px solid rgb(211, 210, 210);
+        border-radius: 10px;
+        padding-bottom: 10px;
+
+    }
+    .form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        align-items: start;
+        width: 100%;
+        padding: 10px;
+
+    }
+    .inputContainer{
+        width: 100%;
+      
+    }
+    .inputfield{
+        width: 100%;
+        height: 50px;
+        border: 2px solid rgb(228, 212, 212);
+        font-size: 1rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 500;
+        border-radius: 10px;
+        padding-left: 10px;
+       
+    }
+    .inputfield:focus{
+        border: 2px solid rgb(228, 212, 212);
+        box-shadow: rgb(228, 212, 212) 0px 5px 15px;
+        outline: none;
+    }
+    .inputfield::placeholder{
+        color: purple;
+    }
+    .advice{
+        margin-top: -18px;
+        padding-left: 5px;
+        /* font-size: 1rem; */
+        font-weight: 400;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .button{
+        width: 100%;
+        height: 40px;
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.2rem;
+        color: white;
+        background-color: rgb(146, 146, 255);
+        border: none;
+        border-radius: 5px;
+        transition: .5s ease ;
+   
+    }
+    .button:hover{
+        background-color: rgb(64, 64, 252);
+    }
+    .heading{
+        font-size: 2rem;
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    }
+    .description{
+        font-size: 1rem;
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+        padding-top:none;
+        text-align: center;
+    }
+    .list{
+        font-size: 1rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 500;
+    }
+
+    .listContainer{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        padding-left: 30px;
+    }
+    .result{
+        font-size: 1.5rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 600;
+        padding-left: 10px;
+    }
+    .error{
+        color: red;
+        font-size: .9rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 500;
+        padding-left:10px ;
+    }
+</style>
+
+<body>
+    <div class="container">
+       <p class="heading">Body Mass Index</p>
+       <p class="description">BMI is a simple tool to gauge weight health.
+          It estimates body fat based on height and weight, indicating underweight, normal, overweight, or obese categories. This helps raise awareness of potential health risks linked to weight, though it doesn't directly measure body fat and has limitations.</p>
+        <from class="form">
+            <div class="inputContainer">
+                <!-- <label for="height">height</label> -->
+                <input class="inputfield" id="height" placeholder="Height in Cm" type="number" min="1" max="250"></input>
+                <div class="error heightError"></div>
+
+            </div>
+            <div class="inputContainer">
+                <!-- <label for="weight">Weight</label> -->
+                <input class="inputfield" id="weight" placeholder="Weight in Kg" type="number" min="1" max="150"></input>
+                <div class="error weightError"></div>
+
+            </div>
+            <div class="advice">
+                <p>Get the Result by clicking on Calculate</p>
+            </div>
+            <div class="result">
+
+            </div>
+           <button class="button" id="calculateButton" type="submit" onclick="handleCaluclate()">
+            Calculate
+           </button>
+        </from>
+        <div class="listContainer">
+            <ul class="list">
+                <li style="color: skyblue;">
+                    Underweight (BMI less than 18.5)
+                </li>
+                <li style="color: green;">
+                    Normal weight (BMI 18.5 to 24.9)
+                </li>
+                <li style="color: orange;">
+                    Overweight (BMI 25 to 29.9)
+                </li>
+                <li style="color: red;">
+                    Obese (BMI 30 or greater)
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    
+</body>
+<script>
+    function handleCaluclate(){
+        
+        const form =  document.querySelector('.form')
+        
+        form.addEventListener('submit', (e)=>{
+            e.preventDefault()
+            
+        })
+        const height = parseInt(document.querySelector('#height').value);
+        const weight = parseInt(document.querySelector('#weight').value);
+        const result = document.querySelector('.result');
+        const weightError = document.querySelector('.weightError');
+        const heightError = document.querySelector('.heightError');
+        console.log('99999999999999999999999')
+        if(!weight)
+        {
+            weightError.style.color = 'red' 
+            weightError.innerHTML =`Please enter your weight`
+        }
+        if(!height)
+        {
+            heightError.style.color = 'red' 
+            heightError.innerHTML =`Please enter your height`
+        }
+
+        if(height && weight)
+        {
+            const bmi = (weight/((height * height)/10000)).toFixed(2)
+        if(bmi < 18.5)
+        {
+             result.style.color = 'skyblue' 
+            result.innerHTML =`Body Mass Index is  : ${ bmi}`
+
+        }
+        else if(bmi > 18.5 && bmi < 24.9 )
+        {
+            result.style.color = 'green' 
+            result.innerHTML =`Body Mass Index is  : ${ bmi}`
+        }
+        else if(bmi > 25 && bmi < 29.9 )
+        {
+            result.style.color = 'orange' 
+            result.innerHTML =`Body Mass Index is  : ${ bmi}`
+        }
+        else if(bmi > 30)
+        {
+            result.style.color = 'red' 
+            result.innerHTML =`Body Mass Index is  : ${ bmi}`
+        }
+        else{
+            console.log('yeah kese aaya')
+        }
+        weightError.innerHTML = ''
+        heightError.innerHTML =``
+        }
+
+       
+      
+
+    }
+
+</script>
+
+</html>
