@@ -153,12 +153,12 @@
         <p id="message">All the best</p>
         <div class="inputContainer" id="inputContainerOne">
             <input type="number" min="1" max="100" placeholder="enter number" id="inputNumberId"></input>
-            <button onclick="handleSubmit()" id="submitButton" class="submitButtonOne" disabled>Submit</button>
+            <button onclick="handleSubmit()" id="submitButton" class="submitButtonOne">Submit</button>
 
         </div>
         <p id="remaining">Remaining chances</p>
-        <p id="previouse">Here Your will get your previouse move</p>
-        <button onclick="handleStart()" class="startButton">start</button>
+        <p id="previouse">Here You will get your previouse move</p>
+        <button onclick="handleStart()" class="startButton">Play</button>
 
         <button onclick="hadnleEnd()" class="endButton">End</button>
 
@@ -166,128 +166,157 @@
 
 </body>
 <script>
-    //    const naem = document.getElementById("conatiner").style.display='none';
-
+    const totalTurns = 10;
     let matchisStart = false
-    const static = 2;
+    const static = totalTurns;
     let totalChances;
     let previouseMove = []
-    //    let  previouseMove = [2 , 20 ,30 ];
     let randomNumber = 0;
     let matchStatus = false
-    // document.querySelector('#submitButton').disabled = true
+
+    // selectors
+    let submitButton = document.querySelector('#submitButton')
+    let remainingMoves = document.querySelector('#remaining')
+    let inputField = document.querySelector('#inputNumberId');
+    let endButton = document.querySelector('.endButton')
+    let startButton = document.querySelector('.startButton')
+    let previouse = document.querySelector('#previouse')
+    let messages = document.querySelector('#message')
+    let inputContainer = document.querySelector('#inputContainerOne')
+
+
+
+    function generateRandomNumber() {
+        randomNumber = parseInt(Math.random() * 100 + 1)
+        console.log(randomNumber, '---------------------')
+    }
+
 
 
     const handleStartUI = () => {
-        document.querySelector('.endButton').style.display = 'block'
-        document.querySelector('.startButton').style.display = 'none'
-        document.querySelector('#previouse').style.display = 'block'
-        document.querySelector('#remaining').style.display = 'block'
-        document.querySelector('#message').style.display = 'block'
-        document.querySelector('#inputContainerOne').style.display = 'flex'
+        endButton.style.display = 'block'
+        startButton.style.display = 'none'
+        previouse.style.display = 'block'
+        remainingMoves.style.display = 'block'
+        messages.style.display = 'block'
+        inputContainer.style.display = 'flex'
     }
     const handleEndtUI = () => {
-        document.querySelector('.endButton').style.display = 'none'
-        document.querySelector('.startButton').style.display = 'block'
-        document.querySelector('#previouse').style.display = 'none'
-        document.querySelector('#remaining').style.display = 'none'
-        document.querySelector('#message').style.display = 'none'
-        document.querySelector('#inputContainerOne').style.display = 'none'
+        endButton.style.display = 'none'
+        startButton.style.display = 'block'
+        previouse.style.display = 'none'
+        remainingMoves.style.display = 'none'
+        messages.style.display = 'none'
+        inputContainer.style.display = 'none'
     }
 
     function handleStart() {
+        messages.style.color = ''
+        messages.innerHTML = 'All the best'
+        inputField.value = ''
+        previouse.innerHTML = `Here You Will Get Your Previouse Move`
+        matchisStart = true // start the match
+        matchStatus = false; // match status that means match winned or not 
+        totalChances = totalTurns; // decided total turns
+        generateRandomNumber() // generate number
+        previouseMove = [] // set empty array to show previous move
+        // document.querySelector('#submitButton').disabled = false // enable the submit button
+        // for restart 
+        submitButton.classList.remove("disabled"); // for restart  enable the submit button
+        remainingMoves.innerHTML = `You have ${totalChances} Chances to Won the game` // to show the left chances
         handleStartUI()
-        matchisStart = true
-        totalChances = 2;
-        document.querySelector('#submitButton').disabled = false
+    }
 
-        previouseMove = []
-        generateRandomNumber()
-        console.log(randomNumber, 'randomNumber')
-        const submitButton = document.querySelector('#submitButton')
-        submitButton.classList.remove("disabled");
 
-        matchStatus = false;
-        document.querySelector('#remaining').innerHTML = `You have ${totalChances} Chances to Won the game`
 
+    function checkNumber(n) {
+        if (n > randomNumber) {
+            messages.innerHTML = 'Number is Greater than mine'
+            messages.style.color = 'orange'
+
+        }
+        else if (n < randomNumber) {
+            messages.innerHTML = 'Number is less than mine'
+            messages.style.color = 'skyblue'
+
+        }
+        else if (n == randomNumber) {
+            matchStatus = true
+            matchisStart = false
+            endButton.style.display = 'none'
+            startButton.style.display = 'block'
+            startButton.innerText = 'Play Again'
+            messages.style.color = 'lightgreen'
+            messages.innerHTML = 'You won the match'
+
+        }
+
+    }
+
+    function handleSubmit() {
+        
+        if (matchisStart) {
+            if (totalChances) {
+
+
+                const inputnumber = inputField.value
+                totalChances = totalChances - 1;
+                checkNumber(inputnumber)
+
+                if (matchStatus) {
+                    remainingMoves.innerHTML = `You have won the game in ${static - totalChances} Chances`
+
+                }
+                else {
+                    if (!totalChances) {
+                        messages.style.color = 'white'
+                        messages.innerHTML = 'pull your socks up & Play again';
+                        remainingMoves.innerHTML = `You loss the game`
+                        previouseMove.push(inputnumber)
+                        previouse.innerHTML = `previouse move ${previouseMove}`
+                        inputField.value = ''
+                        submitButton.classList.add("disabled");
+                        endButton.style.display = 'none'
+                        startButton.style.display = 'block'
+                        startButton.innerText = 'Play Again'
+
+                    }
+                    else {
+                        console.log(totalChances , '*******************')
+                        if (totalChances >= 7) {
+                            remainingMoves.style.color = 'lightgreen'
+                            // remainingMoves?.style?.color = 'green'
+                            console.log('1111111111111')
+                        }
+                        else if (totalChances < 7 && totalChances >= 4 ) {
+                            remainingMoves.style.color = 'yellow'
+                            console.log('22222222222222222222')
+
+                        }
+                        else {
+                            remainingMoves.style.color = 'crimson'
+                            console.log('3333333333333333333333')
+                        }
+                        remainingMoves.innerHTML = `You have ${totalChances} left Chances to Won the game`
+                        previouseMove.push(inputnumber)
+                        previouse.innerHTML = `previouse move ${previouseMove}`
+                        inputField.value = ''
+
+                    }
+
+                }
+
+
+            }
+        }
     }
 
     function hadnleEnd() {
         handleEndtUI()
         matchisStart = false
-        document.querySelector('#submitButton').disabled = true
+        startButton.innerText = 'Play'
     }
 
-    function generateRandomNumber() {
-        randomNumber = parseInt(Math.random() * 100 + 1)
-    }
-
-    function handleSubmit() {
-        if (matchisStart) {
-            if (totalChances) {
-                console.log(totalChances, '-------------------')
-                inputField = document.querySelector('#inputNumberId');
-                const inputnumber = inputField.value
-                totalChances = totalChances - 1;
-                const messge = checkNumber(inputnumber)
-                document.querySelector('#message').innerHTML = messge;
-                if (matchStatus) {
-                    document.querySelector('#remaining').innerHTML = `You have won the game in ${static - totalChances} Chances`
-
-                }
-                else {
-
-                    if (!totalChances) {
-                        document.querySelector('#message').innerHTML = 'pull your socks up & Play again';
-                        document.querySelector('#remaining').innerHTML = `You loss the game`
-                        previouseMove.push(inputnumber)
-                        document.querySelector('#previouse').innerHTML = `previouse move ${previouseMove}`
-                        inputField.value = ''
-                        const submitButton = document.querySelector('#submitButton')
-                        document.querySelector('#submitButton').disabled = true
-                        submitButton.classList.add("disabled");
-                        document.querySelector('.endButton').style.display = 'none'
-                        document.querySelector('.startButton').style.display = 'block'
-                        document.querySelector('.startButton').innerText = 'Restart'
-
-                    }
-                    else {
-                        document.querySelector('#remaining').innerHTML = `You have ${totalChances} left Chances to Won the game`
-                        previouseMove.push(inputnumber)
-                        document.querySelector('#previouse').innerHTML = `previouse move ${previouseMove}`
-                        inputField.value = ''
-
-                    }
-
-                }
-
-
-            }
-            else {
-
-
-
-            }
-
-        }
-
-
-    }
-
-    function checkNumber(n) {
-        if (n > randomNumber) {
-            return ('Number is Greater than mine')
-        }
-        else if (n < randomNumber) {
-            return ('Number is less than mine')
-        }
-        else if (n == randomNumber) {
-            console.log('you won the match ')
-            matchStatus = true
-            return ('You won the match ')
-        }
-
-    }
 
 </script>
 
